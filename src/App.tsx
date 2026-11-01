@@ -108,15 +108,15 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900">
+    <div className="dark-theme min-h-screen bg-slate-950 text-slate-100">
       <div className="border-b border-blue-100 bg-blue-50 px-4 py-2 text-center text-xs font-medium text-blue-800">
-        Fan-made simulator · Demo credits only · No real Robux transfers or payments
+        Fan-made simulator · Simulated Robux only · No real Robux transfers or payments
       </div>
       <header className="sticky top-0 z-30 border-b border-slate-200/80 bg-white/90 backdrop-blur">
         <div className="mx-auto flex h-[72px] max-w-6xl items-center justify-between px-4 sm:px-6">
-          <a href="#" className="flex items-center gap-2.5" aria-label="GiftLab home">
+          <a href="#" className="flex items-center gap-2.5" aria-label="Roblox Gifter home">
             <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600 text-white"><Gift size={19} /></span>
-            <span className="text-lg font-extrabold tracking-tight">GiftLab<span className="text-blue-600">.</span></span>
+            <span className="text-lg font-extrabold tracking-tight">Roblox Gifter<span className="text-blue-600">.</span></span>
           </a>
           <nav className="hidden items-center gap-8 text-sm font-medium text-slate-600 md:flex">
             <a className="transition hover:text-blue-600" href="#gifting">Send a gift</a>
@@ -170,7 +170,7 @@ function App() {
                 </div>
               </div>
               <div className="rounded-xl bg-slate-50 p-4">
-                <div className="flex items-center justify-between text-sm"><span className="text-slate-500">Selected gift</span><strong>{selected.toLocaleString()} demo credits</strong></div>
+                <div className="flex items-center justify-between text-sm"><span className="text-slate-500">Selected gift</span><strong>{selected.toLocaleString()} simulated Robux</strong></div>
                 <div className="mt-2 flex items-center justify-between text-sm"><span className="text-slate-500">Demo value</span><strong className="text-blue-600">{money(chosen.price)}</strong></div>
               </div>
               <p className="mt-4 text-center text-[11px] leading-5 text-slate-400">Illustrative values only. Not official Roblox prices or currency.</p>
@@ -181,13 +181,13 @@ function App() {
         <section id="gifting" className="scroll-mt-28 py-8">
           <div className="mb-7 flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
             <div><p className="text-xs font-bold uppercase tracking-[.16em] text-blue-600">The gifting desk</p><h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">Choose your gift</h2><p className="mt-2 text-sm text-slate-500">Select a demo package to preview your gift.</p></div>
-            <span className="text-xs text-slate-400">All amounts are fictional demo credits</span>
+            <span className="text-xs text-slate-400">All amounts are fictional simulated Robux</span>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {AMOUNTS.map((item) => <button key={item.amount} onClick={() => setSelected(item.amount)} className={`relative rounded-xl border bg-white p-5 text-left transition hover:-translate-y-0.5 hover:shadow-soft ${selected === item.amount ? "border-blue-500 ring-4 ring-blue-50" : "border-slate-200"}`}>
               {item.label === "Popular" && <span className="absolute -top-2.5 right-4 rounded-full bg-blue-600 px-2.5 py-1 text-[10px] font-bold text-white">POPULAR</span>}
               <div className="flex items-center justify-between"><span className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-600"><Gift size={19} /></span>{selected === item.amount && <span className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-600 text-white"><Check size={14} /></span>}</div>
-              <p className="mt-5 text-2xl font-extrabold tracking-tight">{item.amount.toLocaleString()}</p><p className="mt-1 text-xs text-slate-500">Demo credits</p>
+              <p className="mt-5 text-2xl font-extrabold tracking-tight">{item.amount.toLocaleString()}</p><p className="mt-1 text-xs text-slate-500">Simulated Robux</p>
               <div className="mt-5 border-t border-slate-100 pt-4"><p className="text-lg font-bold text-blue-600">{money(item.price)}</p><p className="mt-1 text-[11px] text-slate-400">Illustrative demo value</p></div>
             </button>)}
           </div>
@@ -201,16 +201,16 @@ function App() {
           <div className="mb-7 flex items-end justify-between gap-4"><div><p className="text-xs font-bold uppercase tracking-[.16em] text-blue-600">Your activity</p><h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">Gift history</h2><p className="mt-2 text-sm text-slate-500">A record of gifts created in this browser.</p></div><span className="rounded-lg bg-white px-3 py-2 text-xs font-semibold text-slate-500 ring-1 ring-slate-200">{myGifts.length} gifts</span></div>
           <div className="panel overflow-hidden">
             {!session ? <div className="flex flex-col items-center px-5 py-14 text-center"><span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-600"><History size={22} /></span><h3 className="mt-4 font-semibold">Log in to view your history</h3><p className="mt-1 max-w-sm text-sm text-slate-500">Your demo gifts will appear here after you sign in.</p><button className="btn-primary mt-5" onClick={() => openAuth("login")}>Log in <ArrowRight size={15} /></button></div> : myGifts.length === 0 ? <div className="flex flex-col items-center px-5 py-14 text-center"><span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-50 text-slate-400"><History size={22} /></span><h3 className="mt-4 font-semibold">No gifts yet</h3><p className="mt-1 text-sm text-slate-500">Your first simulated gift will show up here.</p></div> :
-              <div className="divide-y divide-slate-100">{myGifts.map((gift) => <div key={gift.id} className="flex flex-wrap items-center justify-between gap-4 px-5 py-4 sm:px-6"><div className="flex items-center gap-3"><span className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-600"><Gift size={18} /></span><div><p className="text-sm font-semibold">Gift to {gift.recipient}</p><p className="mt-1 text-xs text-slate-400">{new Date(gift.date).toLocaleString()}</p></div></div><div className="ml-auto text-right"><p className="text-sm font-bold">{gift.amount.toLocaleString()} credits</p><p className="mt-1 text-xs font-medium text-emerald-600">Demo completed</p></div></div>)}</div>}
+              <div className="divide-y divide-slate-100">{myGifts.map((gift) => <div key={gift.id} className="flex flex-wrap items-center justify-between gap-4 px-5 py-4 sm:px-6"><div className="flex items-center gap-3"><span className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-600"><Gift size={18} /></span><div><p className="text-sm font-semibold">Gift to {gift.recipient}</p><p className="mt-1 text-xs text-slate-400">{new Date(gift.date).toLocaleString()}</p></div></div><div className="ml-auto text-right"><p className="text-sm font-bold">{gift.amount.toLocaleString()} Robux</p><p className="mt-1 text-xs font-medium text-emerald-600">Demo completed</p></div></div>)}</div>}
           </div>
         </section>
 
         <section id="about" className="rounded-2xl bg-slate-900 px-6 py-8 text-white sm:px-9 sm:py-10">
-          <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-center"><div><p className="text-xs font-bold uppercase tracking-[.16em] text-blue-300">A quick note</p><h2 className="mt-2 text-2xl font-bold">Just for fun. Clearly a demo.</h2><p className="mt-2 max-w-2xl text-sm leading-6 text-slate-300">GiftLab is an independent fan-made interface concept. It is not affiliated with Roblox. Demo credits have no cash value, and this site does not send Robux, process payments or connect to Roblox accounts.</p></div><span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 text-blue-200"><ShieldCheck size={27} /></span></div>
+          <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-center"><div><p className="text-xs font-bold uppercase tracking-[.16em] text-blue-300">A quick note</p><h2 className="mt-2 text-2xl font-bold">Just for fun. Clearly a demo.</h2><p className="mt-2 max-w-2xl text-sm leading-6 text-slate-300">Roblox Gifter is an independent fan-made interface concept. It is not affiliated with Roblox. Simulated Robux have no cash value, and this site does not send Robux, process payments or connect to Roblox accounts.</p></div><span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 text-blue-200"><ShieldCheck size={27} /></span></div>
         </section>
       </main>
 
-      <footer className="border-t border-slate-200 bg-white"><div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-7 text-xs text-slate-400 sm:flex-row sm:items-center sm:justify-between sm:px-6"><span className="font-bold tracking-tight text-slate-700">GiftLab<span className="text-blue-600">.</span></span><span>Independent fan-made demo · Not affiliated with Roblox · No real Robux or payments</span><a href="#about" className="font-medium text-blue-600 hover:text-blue-700">About this simulator</a></div></footer>
+      <footer className="border-t border-slate-200 bg-white"><div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-7 text-xs text-slate-400 sm:flex-row sm:items-center sm:justify-between sm:px-6"><span className="font-bold tracking-tight text-slate-700">Roblox Gifter<span className="text-blue-600">.</span></span><span>Independent fan-made demo · Not affiliated with Roblox · No real Robux or payments</span><a href="#about" className="font-medium text-blue-600 hover:text-blue-700">About this simulator</a></div></footer>
 
       {notice && <div role="status" className="fixed bottom-5 left-1/2 z-50 flex w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 items-start gap-3 rounded-xl border border-blue-100 bg-white p-4 text-sm shadow-xl"><span className="mt-0.5 text-blue-600"><Check size={17} /></span><span className="flex-1 text-slate-700">{notice}</span><button onClick={() => setNotice("")} aria-label="Dismiss"><X size={16} /></button></div>}
 
@@ -225,7 +225,7 @@ function App() {
             <p className="text-[11px] leading-5 text-slate-400">Demo accounts are stored only in this browser. Do not use a real password. This is not production authentication.</p>
             <button type="submit" className="btn-primary w-full">{authMode === "signup" ? "Create demo account" : "Log in"} <ArrowRight size={15} /></button>
           </form>
-          <p className="mt-5 text-center text-sm text-slate-500">{authMode === "signup" ? "Already have an account?" : "New to GiftLab?"} <button className="font-semibold text-blue-600 hover:text-blue-700" onClick={() => { setAuthMode(authMode === "signup" ? "login" : "signup"); setAuthError(""); }}>{authMode === "signup" ? "Log in" : "Create an account"}</button></p>
+          <p className="mt-5 text-center text-sm text-slate-500">{authMode === "signup" ? "Already have an account?" : "New to Roblox Gifter?"} <button className="font-semibold text-blue-600 hover:text-blue-700" onClick={() => { setAuthMode(authMode === "signup" ? "login" : "signup"); setAuthError(""); }}>{authMode === "signup" ? "Log in" : "Create an account"}</button></p>
         </div>
       </div>}
 
@@ -233,7 +233,7 @@ function App() {
         <div className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-2xl">
           <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-600"><Gift size={21} /></div>
           <h2 className="mt-4 text-xl font-bold">Confirm demo gift</h2><p className="mt-1 text-sm text-slate-500">Review the details before adding it to your local history.</p>
-          <div className="my-5 space-y-3 rounded-xl bg-slate-50 p-4 text-sm"><div className="flex justify-between"><span className="text-slate-500">Recipient</span><strong>{recipient}</strong></div><div className="flex justify-between"><span className="text-slate-500">Amount</span><strong>{selected.toLocaleString()} demo credits</strong></div><div className="flex justify-between"><span className="text-slate-500">Illustrative value</span><strong>{money(chosen.price)}</strong></div><div className="flex justify-between"><span className="text-slate-500">Payment due</span><strong className="text-emerald-700">$0.00</strong></div></div>
+          <div className="my-5 space-y-3 rounded-xl bg-slate-50 p-4 text-sm"><div className="flex justify-between"><span className="text-slate-500">Recipient</span><strong>{recipient}</strong></div><div className="flex justify-between"><span className="text-slate-500">Amount</span><strong>{selected.toLocaleString()} simulated Robux</strong></div><div className="flex justify-between"><span className="text-slate-500">Illustrative value</span><strong>{money(chosen.price)}</strong></div><div className="flex justify-between"><span className="text-slate-500">Payment due</span><strong className="text-emerald-700">$0.00</strong></div></div>
           <p className="mb-4 text-xs leading-5 text-slate-400">This does not contact Roblox, transfer Robux or charge a payment method.</p>
           <div className="flex gap-2"><button className="btn-secondary flex-1" onClick={() => setConfirmOpen(false)}>Cancel</button><button className="btn-primary flex-1" onClick={sendGift}>Confirm gift <Check size={15} /></button></div>
         </div>
