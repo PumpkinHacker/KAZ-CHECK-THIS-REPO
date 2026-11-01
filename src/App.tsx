@@ -189,7 +189,7 @@ function App() {
         <section id="gifting" className="scroll-mt-28 py-8">
           <div className="mb-7 flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
             <div><p className="text-xs font-bold uppercase tracking-[.16em] text-blue-600">The gifting desk</p><h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">Choose your gift</h2><p className="mt-2 text-sm text-slate-500">Select an amount for your gift preview.</p></div>
-            <span className="text-xs text-slate-400">All amounts are fictional Robux</span>
+            <span className="text-xs text-slate-400">Choose an amount below</span>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {AMOUNTS.map((item) => <button key={item.amount} onClick={() => setSelected(item.amount)} className={`relative rounded-xl border bg-white p-5 text-left transition hover:-translate-y-0.5 hover:shadow-soft ${selected === item.amount ? "border-blue-500 ring-4 ring-blue-50" : "border-slate-200"}`}>
