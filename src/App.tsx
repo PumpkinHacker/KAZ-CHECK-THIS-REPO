@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import {
-  ArrowRight, Check, ChevronDown, Clock3, Gift, History, LogIn,
-  LogOut, Menu, ShieldCheck, Sparkles, UserRound, Wallet, X
+  ArrowRight, Check, Clock3, Gift, History,
+  LogOut, Menu, ShieldCheck, Sparkles, UserRound, X
 } from "lucide-react";
 
 type Account = { username: string; email: string; salt: string; passwordHash: string };
@@ -40,9 +40,9 @@ function money(value: number) {
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(value);
 }
 function App() {
-  const [session, setSession] = useState<Session | null>(() => readStore(SESSION_KEY, null));
-  const [accounts, setAccounts] = useState<Account[]>(() => readStore(ACCOUNTS_KEY, []));
-  const [history, setHistory] = useState<GiftRecord[]>(() => readStore(HISTORY_KEY, []));
+  const [session, setSession] = useState<Session | null>(() => readStore<Session | null>(SESSION_KEY, null));
+  const [accounts, setAccounts] = useState<Account[]>(() => readStore<Account[]>(ACCOUNTS_KEY, []));
+  const [history, setHistory] = useState<GiftRecord[]>(() => readStore<GiftRecord[]>(HISTORY_KEY, []));
   const [selected, setSelected] = useState(250);
   const [recipient, setRecipient] = useState("");
   const [authOpen, setAuthOpen] = useState(false);
