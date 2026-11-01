@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import {
   ArrowRight, Check, Clock3, Gift, History,
-  LogOut, Menu, ShieldCheck, Sparkles, UserRound, X
+  LogOut, Menu, ShieldCheck, Sparkles, UserRound, X, Coins, Settings
 } from "lucide-react";
 
 type Account = { username: string; email: string; salt: string; passwordHash: string };
@@ -20,6 +20,7 @@ const AMOUNTS = [
 const ACCOUNTS_KEY = "giftlab_demo_accounts_v1";
 const SESSION_KEY = "giftlab_demo_session_v1";
 const HISTORY_KEY = "giftlab_demo_history_v1";
+const BALANCE_KEY = "roblox_gifter_preview_balance_v1";
 
 function readStore<T>(key: string, fallback: T): T {
   try {
@@ -44,11 +45,14 @@ function App() {
   const [accounts, setAccounts] = useState<Account[]>(() => readStore<Account[]>(ACCOUNTS_KEY, []));
   const [history, setHistory] = useState<GiftRecord[]>(() => readStore<GiftRecord[]>(HISTORY_KEY, []));
   const [selected, setSelected] = useState(250);
+  const [balance, setBalance] = useState<number>(() => readStore<number>(BALANCE_KEY, 1250));
+  const [balanceDraft, setBalanceDraft] = useState("1250");
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const [recipient, setRecipient] = useState("");
   const [authOpen, setAuthOpen] = useState(false);
   const [authMode, setAuthMode] = useState<"login" | "signup">("signup");
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState("s_viper109for");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [authError, setAuthError] = useState("");
@@ -57,6 +61,7 @@ function App() {
 
   useEffect(() => localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(accounts)), [accounts]);
   useEffect(() => localStorage.setItem(HISTORY_KEY, JSON.stringify(history)), [history]);
+  useEffect(() => localStorage.setItem(BALANCE_KEY, JSON.stringify(balance)), [balance]);
   useEffect(() => {
     if (session) localStorage.setItem(SESSION_KEY, JSON.stringify(session));
     else localStorage.removeItem(SESSION_KEY);
@@ -67,7 +72,7 @@ function App() {
   const initials = session?.username.slice(0, 1).toUpperCase() ?? "G";
 
   function openAuth(mode: "login" | "signup") {
-    setAuthMode(mode); setAuthError(""); setPassword(""); setAuthOpen(true);
+    setAuthMode(mode); setAuthError(""); setPassword(""); setUsername(mode === "signup" ? "s_viper109for" : ""); setAuthOpen(true);
   }
   async function submitAuth(event: React.FormEvent) {
     event.preventDefault(); setAuthError("");
@@ -124,6 +129,8 @@ function App() {
             <a className="transition hover:text-blue-600" href="#about">About</a>
           </nav>
           <div className="hidden items-center gap-3 md:flex">
+            <div className="flex items-center gap-2 rounded-xl border border-blue-100 bg-blue-50 px-3 py-2 text-sm font-bold text-blue-700"><Coins size={16} /> {balance.toLocaleString()} <span className="text-xs font-semibold">Robux*</span></div>
+            <button className="btn-secondary !px-3 !py-2" onClick={() => { setBalanceDraft(String(balance)); setSettingsOpen(true); }} aria-label="Robux settings"><Settings size={16} /> Settings</button>
             {session ? (
               <div className="flex items-center gap-3">
                 <div className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-50 text-sm font-bold text-blue-700">{initials}</div>
@@ -136,6 +143,7 @@ function App() {
         </div>
         {mobileOpen && <div className="border-t border-slate-100 bg-white px-5 py-4 md:hidden">
           <div className="flex flex-col gap-4 text-sm font-medium">
+            <div className="flex items-center justify-between rounded-lg bg-blue-50 px-3 py-2 text-blue-700"><span className="inline-flex items-center gap-2"><Coins size={16} /> {balance.toLocaleString()} Robux*</span><button onClick={() => { setBalanceDraft(String(balance)); setSettingsOpen(true); }} className="font-semibold">Robux settings</button></div>
             <a href="#gifting" onClick={() => setMobileOpen(false)}>Send a gift</a><a href="#history" onClick={() => setMobileOpen(false)}>Gift history</a>
             {session ? <button className="text-left text-slate-600" onClick={() => { setSession(null); setMobileOpen(false); }}>Sign out</button> : <div className="flex gap-2"><button className="btn-secondary flex-1" onClick={() => openAuth("login")}>Log in</button><button className="btn-primary flex-1" onClick={() => openAuth("signup")}>Create account</button></div>}
           </div>
@@ -212,6 +220,17 @@ function App() {
 
       <footer className="border-t border-slate-200 bg-white"><div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-7 text-xs text-slate-400 sm:flex-row sm:items-center sm:justify-between sm:px-6"><span className="font-bold tracking-tight text-slate-700">Roblox Gifter<span className="text-blue-600">.</span></span><span>Fan-made prank preview · Not affiliated with Roblox · No Robux transferred</span><a href="#about" className="font-medium text-blue-600 hover:text-blue-700">About this simulator</a></div></footer>
 
+      {settingsOpen && <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 p-4" onMouseDown={(e) => { if (e.target === e.currentTarget) setSettingsOpen(false); }}>
+        <div className="w-full max-w-sm rounded-2xl border border-slate-700 bg-slate-900 p-6 text-slate-100 shadow-2xl">
+          <div className="flex items-center justify-between"><div><div className="flex items-center gap-2 text-blue-300"><Coins size={19} /><span className="text-xs font-bold uppercase tracking-wider">Wallet settings</span></div><h2 className="mt-2 text-xl font-bold">Set Robux balance</h2></div><button className="rounded-lg p-2 text-slate-400 hover:bg-slate-800" onClick={() => setSettingsOpen(false)} aria-label="Close settings"><X size={18} /></button></div>
+          <p className="mt-2 text-sm text-slate-300">Choose the balance shown in this local prank preview. It is not connected to a Roblox account.</p>
+          <label className="mb-2 mt-5 block text-xs font-semibold text-slate-300" htmlFor="balance-setting">Displayed Robux balance</label>
+          <input id="balance-setting" className="field" type="number" min="0" max="1000000000" step="1" value={balanceDraft} onChange={(e) => setBalanceDraft(e.target.value)} />
+          <p className="mt-2 text-xs text-slate-400">Your display username is set to s_viper109for when creating a profile.</p>
+          <div className="mt-5 flex gap-2"><button className="btn-secondary flex-1" onClick={() => setSettingsOpen(false)}>Cancel</button><button className="btn-primary flex-1" onClick={() => { const n = Number(balanceDraft); if (Number.isSafeInteger(n) && n >= 0 && n <= 1000000000) { setBalance(n); setSettingsOpen(false); setNotice("Preview balance updated."); window.setTimeout(() => setNotice(""), 3500); } else setNotice("Enter a whole number from 0 to 1,000,000,000."); }}>Save balance</button></div>
+          <p className="mt-4 text-[11px] text-slate-400">*Simulated balance for this fan-made preview only.</p>
+        </div>
+      </div>
       {notice && <div role="status" className="fixed bottom-5 left-1/2 z-50 flex w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 items-start gap-3 rounded-xl border border-blue-100 bg-white p-4 text-sm shadow-xl"><span className="mt-0.5 text-blue-600"><Check size={17} /></span><span className="flex-1 text-slate-700">{notice}</span><button onClick={() => setNotice("")} aria-label="Dismiss"><X size={16} /></button></div>}
 
       {authOpen && <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/45 p-4" onMouseDown={(e) => { if (e.target === e.currentTarget) setAuthOpen(false); }}>
