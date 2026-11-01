@@ -108,14 +108,14 @@ function App() {
     };
     setHistory((old) => [record, ...old]);
     setRecipient(""); setConfirmOpen(false);
-    setNotice("Gift preview created! No Robux were transferred.");
+    setNotice("Gift activity saved. No Robux were transferred.");
     window.setTimeout(() => setNotice(""), 5000);
   }
 
   return (
     <div className="dark-theme min-h-screen bg-slate-950 text-slate-100">
       <div className="border-b border-blue-100 bg-blue-50 px-4 py-2 text-center text-xs font-medium text-blue-800">
-        Independent fan-made concept · Gift previews only
+        Independent fan-made concept · Gift activity only
       </div>
       <header className="sticky top-0 z-30 border-b border-slate-200/80 bg-white/90 backdrop-blur">
         <div className="mx-auto flex h-[72px] max-w-6xl items-center justify-between px-4 sm:px-6">
@@ -155,20 +155,20 @@ function App() {
           <div>
             <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white px-3 py-1.5 text-xs font-semibold text-blue-700"><Sparkles size={14} /> A little something to share</div>
             <h1 className="max-w-xl text-4xl font-extrabold leading-[1.12] tracking-tight text-slate-950 sm:text-5xl lg:text-[58px]">Make someone's day with a <span className="text-blue-600">virtual gift.</span></h1>
-            <p className="mt-5 max-w-lg text-base leading-7 text-slate-500">Choose a gift amount, enter a username and create a gift preview in seconds.</p>
+            <p className="mt-5 max-w-lg text-base leading-7 text-slate-500">Choose a gift amount, enter a username and create a gift-style prank in seconds.</p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <a className="btn-primary" href="#gifting">Explore gifting options <ArrowRight size={16} /></a>
               <span className="text-xs text-slate-400">No payment is collected</span>
             </div>
             <div className="mt-9 flex flex-wrap gap-x-6 gap-y-3 text-xs font-medium text-slate-500">
-              <span className="inline-flex items-center gap-2"><ShieldCheck size={15} className="text-blue-600" /> Preview experience</span>
-              <span className="inline-flex items-center gap-2"><Clock3 size={15} className="text-blue-600" /> Gift preview history</span>
+              <span className="inline-flex items-center gap-2"><ShieldCheck size={15} className="text-blue-600" /> Prank experience</span>
+              <span className="inline-flex items-center gap-2"><Clock3 size={15} className="text-blue-600" /> Gift history</span>
             </div>
           </div>
           <div className="relative mx-auto w-full max-w-md">
             <div className="absolute -inset-5 rounded-[2rem] bg-blue-100/70 blur-2xl" />
             <div className="panel relative overflow-hidden p-6 sm:p-8">
-              <div className="flex items-center justify-between"><span className="text-sm font-semibold text-slate-700">Gift preview</span><span className="rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold text-emerald-700">Preview</span></div>
+              <div className="flex items-center justify-between"><span className="text-sm font-semibold text-slate-700">Gift details</span><span className="rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold text-emerald-700">Demo</span></div>
               <div className="my-8 flex items-center justify-center">
                 <div className="relative flex h-44 w-44 items-center justify-center rounded-full bg-blue-50">
                   <div className="absolute inset-4 rounded-full border border-blue-100" />
@@ -179,7 +179,7 @@ function App() {
               </div>
               <div className="rounded-xl bg-slate-50 p-4">
                 <div className="flex items-center justify-between text-sm"><span className="text-slate-500">Gift amount</span><strong>{selected.toLocaleString()} Robux</strong></div>
-                <div className="mt-2 flex items-center justify-between text-sm"><span className="text-slate-500">Preview value</span><strong className="text-blue-600">{money(chosen.price)}</strong></div>
+                <div className="mt-2 flex items-center justify-between text-sm"><span className="text-slate-500">Displayed value</span><strong className="text-blue-600">{money(chosen.price)}</strong></div>
               </div>
               <p className="mt-4 text-center text-[11px] leading-5 text-slate-400">Fan-made concept. Amounts are illustrative and are not official Roblox prices.</p>
             </div>
@@ -188,7 +188,7 @@ function App() {
 
         <section id="gifting" className="scroll-mt-28 py-8">
           <div className="mb-7 flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
-            <div><p className="text-xs font-bold uppercase tracking-[.16em] text-blue-600">The gifting desk</p><h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">Choose your gift</h2><p className="mt-2 text-sm text-slate-500">Select an amount for your gift preview.</p></div>
+            <div><p className="text-xs font-bold uppercase tracking-[.16em] text-blue-600">The gifting desk</p><h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">Choose your gift</h2><p className="mt-2 text-sm text-slate-500">Select an amount for your gift.</p></div>
             <span className="text-xs text-slate-400">Choose an amount below</span>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -200,31 +200,31 @@ function App() {
             </button>)}
           </div>
           <div className="panel mt-6 grid gap-6 p-5 sm:p-7 md:grid-cols-[1fr_auto] md:items-end">
-            <div><label htmlFor="recipient" className="mb-2 block text-sm font-semibold">Recipient username</label><input id="recipient" className="field max-w-xl" placeholder="Enter a friend's display username" value={recipient} onChange={(e) => setRecipient(e.target.value)} /><p className="mt-2 text-xs text-slate-400">This creates a local preview only; it does not contact a Roblox account.</p></div>
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-center"><div className="mr-2"><p className="text-xs text-slate-400">Preview total</p><p className="text-xl font-bold">{money(chosen.price)}</p></div><button className="btn-primary whitespace-nowrap" onClick={() => { if (!session) openAuth("signup"); else if (recipient.trim().length < 3) setNotice("Enter a recipient username first."); else setConfirmOpen(true); }}>Continue <ArrowRight size={16} /></button></div>
+            <div><label htmlFor="recipient" className="mb-2 block text-sm font-semibold">Recipient username</label><input id="recipient" className="field max-w-xl" placeholder="Enter a friend's display username" value={recipient} onChange={(e) => setRecipient(e.target.value)} /><p className="mt-2 text-xs text-slate-400">This is a fan-made prank and does not contact Roblox or send Robux.</p></div>
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center"><div className="mr-2"><p className="text-xs text-slate-400">Total</p><p className="text-xl font-bold">{money(chosen.price)}</p></div><button className="btn-primary whitespace-nowrap" onClick={() => { if (!session) openAuth("signup"); else if (recipient.trim().length < 3) setNotice("Enter a recipient username first."); else setConfirmOpen(true); }}>Continue <ArrowRight size={16} /></button></div>
           </div>
         </section>
 
         <section id="history" className="scroll-mt-28 py-16">
-          <div className="mb-7 flex items-end justify-between gap-4"><div><p className="text-xs font-bold uppercase tracking-[.16em] text-blue-600">Your activity</p><h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">Gift history</h2><p className="mt-2 text-sm text-slate-500">A record of previews created in this browser.</p></div><span className="rounded-lg bg-white px-3 py-2 text-xs font-semibold text-slate-500 ring-1 ring-slate-200">{myGifts.length} gifts</span></div>
+          <div className="mb-7 flex items-end justify-between gap-4"><div><p className="text-xs font-bold uppercase tracking-[.16em] text-blue-600">Your activity</p><h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">Gift history</h2><p className="mt-2 text-sm text-slate-500">A record of prank gifts created in this browser.</p></div><span className="rounded-lg bg-white px-3 py-2 text-xs font-semibold text-slate-500 ring-1 ring-slate-200">{myGifts.length} gifts</span></div>
           <div className="panel overflow-hidden">
-            {!session ? <div className="flex flex-col items-center px-5 py-14 text-center"><span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-600"><History size={22} /></span><h3 className="mt-4 font-semibold">Log in to view your history</h3><p className="mt-1 max-w-sm text-sm text-slate-500">Your gift previews will appear here after you sign in.</p><button className="btn-primary mt-5" onClick={() => openAuth("login")}>Log in <ArrowRight size={15} /></button></div> : myGifts.length === 0 ? <div className="flex flex-col items-center px-5 py-14 text-center"><span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-50 text-slate-400"><History size={22} /></span><h3 className="mt-4 font-semibold">No gifts yet</h3><p className="mt-1 text-sm text-slate-500">Your first gift preview will show up here.</p></div> :
-              <div className="divide-y divide-slate-100">{myGifts.map((gift) => <div key={gift.id} className="flex flex-wrap items-center justify-between gap-4 px-5 py-4 sm:px-6"><div className="flex items-center gap-3"><span className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-600"><Gift size={18} /></span><div><p className="text-sm font-semibold">Gift to {gift.recipient}</p><p className="mt-1 text-xs text-slate-400">{new Date(gift.date).toLocaleString()}</p></div></div><div className="ml-auto text-right"><p className="text-sm font-bold">{gift.amount.toLocaleString()} Robux</p><p className="mt-1 text-xs font-medium text-emerald-600">Preview created</p></div></div>)}</div>}
+            {!session ? <div className="flex flex-col items-center px-5 py-14 text-center"><span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-600"><History size={22} /></span><h3 className="mt-4 font-semibold">Log in to view your history</h3><p className="mt-1 max-w-sm text-sm text-slate-500">Your gift activity will appear here after you sign in.</p><button className="btn-primary mt-5" onClick={() => openAuth("login")}>Log in <ArrowRight size={15} /></button></div> : myGifts.length === 0 ? <div className="flex flex-col items-center px-5 py-14 text-center"><span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-50 text-slate-400"><History size={22} /></span><h3 className="mt-4 font-semibold">No gifts yet</h3><p className="mt-1 text-sm text-slate-500">Your first gift will show up here.</p></div> :
+              <div className="divide-y divide-slate-100">{myGifts.map((gift) => <div key={gift.id} className="flex flex-wrap items-center justify-between gap-4 px-5 py-4 sm:px-6"><div className="flex items-center gap-3"><span className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-600"><Gift size={18} /></span><div><p className="text-sm font-semibold">Gift to {gift.recipient}</p><p className="mt-1 text-xs text-slate-400">{new Date(gift.date).toLocaleString()}</p></div></div><div className="ml-auto text-right"><p className="text-sm font-bold">{gift.amount.toLocaleString()} Robux</p><p className="mt-1 text-xs font-medium text-emerald-600">Created</p></div></div>)}</div>}
           </div>
         </section>
 
       </main>
 
-      <footer className="border-t border-slate-200 bg-white"><div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-7 text-xs text-slate-400 sm:flex-row sm:items-center sm:justify-between sm:px-6"><span className="font-bold tracking-tight text-slate-700">Roblox Gifter<span className="text-blue-600">.</span></span><span>Fan-made prank preview · Not affiliated with Roblox · No Robux transferred</span><a href="#gifting" className="font-medium text-blue-600 hover:text-blue-700">Gifting</a></div></footer>
+      <footer className="border-t border-slate-200 bg-white"><div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-7 text-xs text-slate-400 sm:flex-row sm:items-center sm:justify-between sm:px-6"><span className="font-bold tracking-tight text-slate-700">Roblox Gifter<span className="text-blue-600">.</span></span><span>Fan-made prank · Not affiliated with Roblox · No real Robux transferred</span><a href="#gifting" className="font-medium text-blue-600 hover:text-blue-700">Gifting</a></div></footer>
 
       {settingsOpen && <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 p-4" onMouseDown={(e) => { if (e.target === e.currentTarget) setSettingsOpen(false); }}>
         <div className="w-full max-w-sm rounded-2xl border border-slate-700 bg-slate-900 p-6 text-slate-100 shadow-2xl">
           <div className="flex items-center justify-between"><div><div className="flex items-center gap-2 text-blue-300"><Coins size={19} /><span className="text-xs font-bold uppercase tracking-wider">Wallet settings</span></div><h2 className="mt-2 text-xl font-bold">Set Robux balance</h2></div><button className="rounded-lg p-2 text-slate-400 hover:bg-slate-800" onClick={() => setSettingsOpen(false)} aria-label="Close settings"><X size={18} /></button></div>
-          <p className="mt-2 text-sm text-slate-300">Choose the balance shown in this local prank preview. It is not connected to a Roblox account.</p>
+          <p className="mt-2 text-sm text-slate-300">Choose the balance displayed in this fan-made prank. It is not connected to Roblox.</p>
           <label className="mb-2 mt-5 block text-xs font-semibold text-slate-300" htmlFor="balance-setting">Displayed Robux balance</label>
           <input id="balance-setting" className="field" type="number" min="0" max="1000000000" step="1" value={balanceDraft} onChange={(e) => setBalanceDraft(e.target.value)} />
           <p className="mt-2 text-xs text-slate-400">Your display username is set to s_viper109for when creating a profile.</p>
-          <div className="mt-5 flex gap-2"><button className="btn-secondary flex-1" onClick={() => setSettingsOpen(false)}>Cancel</button><button className="btn-primary flex-1" onClick={() => { const n = Number(balanceDraft); if (Number.isSafeInteger(n) && n >= 0 && n <= 1000000000) { setBalance(n); setSettingsOpen(false); setNotice("Preview balance updated."); window.setTimeout(() => setNotice(""), 3500); } else setNotice("Enter a whole number from 0 to 1,000,000,000."); }}>Save balance</button></div>
+          <div className="mt-5 flex gap-2"><button className="btn-secondary flex-1" onClick={() => setSettingsOpen(false)}>Cancel</button><button className="btn-primary flex-1" onClick={() => { const n = Number(balanceDraft); if (Number.isSafeInteger(n) && n >= 0 && n <= 1000000000) { setBalance(n); setSettingsOpen(false); setNotice("Displayed balance updated."); window.setTimeout(() => setNotice(""), 3500); } else setNotice("Enter a whole number from 0 to 1,000,000,000."); }}>Save balance</button></div>
           
         </div>
       </div>}
@@ -248,10 +248,10 @@ function App() {
       {confirmOpen && <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/45 p-4" onMouseDown={(e) => { if (e.target === e.currentTarget) setConfirmOpen(false); }}>
         <div className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-2xl">
           <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-600"><Gift size={21} /></div>
-          <h2 className="mt-4 text-xl font-bold">Confirm gift preview</h2><p className="mt-1 text-sm text-slate-500">Review the preview details before saving it to your local history.</p>
+          <h2 className="mt-4 text-xl font-bold">Confirm gift</h2><p className="mt-1 text-sm text-slate-500">Review the gift details before saving them to your local history.</p>
           <div className="my-5 space-y-3 rounded-xl bg-slate-50 p-4 text-sm"><div className="flex justify-between"><span className="text-slate-500">Recipient</span><strong>{recipient}</strong></div><div className="flex justify-between"><span className="text-slate-500">Amount</span><strong>{selected.toLocaleString()} Robux</strong></div><div className="flex justify-between"><span className="text-slate-500">Illustrative value</span><strong>{money(chosen.price)}</strong></div><div className="flex justify-between"><span className="text-slate-500">Payment due</span><strong className="text-emerald-700">$0.00</strong></div></div>
-          <p className="mb-4 text-xs leading-5 text-slate-400">This is a prank preview only. It does not contact Roblox, transfer Robux or charge a payment method.</p>
-          <div className="flex gap-2"><button className="btn-secondary flex-1" onClick={() => setConfirmOpen(false)}>Cancel</button><button className="btn-primary flex-1" onClick={sendGift}>Create preview <Check size={15} /></button></div>
+          <p className="mb-4 text-xs leading-5 text-slate-400">This is a fan-made prank only. It does not contact Roblox, transfer Robux or charge a payment method.</p>
+          <div className="flex gap-2"><button className="btn-secondary flex-1" onClick={() => setConfirmOpen(false)}>Cancel</button><button className="btn-primary flex-1" onClick={sendGift}>Create gift <Check size={15} /></button></div>
         </div>
       </div>}
     </div>
