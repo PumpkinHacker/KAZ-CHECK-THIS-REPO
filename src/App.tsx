@@ -227,7 +227,7 @@ function App() {
           <div className="mt-5 flex gap-2"><button className="btn-secondary flex-1" onClick={() => setSettingsOpen(false)}>Cancel</button><button className="btn-primary flex-1" onClick={() => { const n = Number(balanceDraft); if (Number.isSafeInteger(n) && n >= 0 && n <= 1000000000) { setBalance(n); setSettingsOpen(false); setNotice("Preview balance updated."); window.setTimeout(() => setNotice(""), 3500); } else setNotice("Enter a whole number from 0 to 1,000,000,000."); }}>Save balance</button></div>
           
         </div>
-      </div>
+      </div>}
       {notice && <div role="status" className="fixed bottom-5 left-1/2 z-50 flex w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 items-start gap-3 rounded-xl border border-blue-100 bg-white p-4 text-sm shadow-xl"><span className="mt-0.5 text-blue-600"><Check size={17} /></span><span className="flex-1 text-slate-700">{notice}</span><button onClick={() => setNotice("")} aria-label="Dismiss"><X size={16} /></button></div>}
 
       {authOpen && <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/45 p-4" onMouseDown={(e) => { if (e.target === e.currentTarget) setAuthOpen(false); }}>
