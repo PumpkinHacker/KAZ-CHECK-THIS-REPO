@@ -143,7 +143,7 @@ function App() {
         </div>
         {mobileOpen && <div className="border-t border-slate-100 bg-white px-5 py-4 md:hidden">
           <div className="flex flex-col gap-4 text-sm font-medium">
-            <div className="flex items-center justify-between rounded-lg bg-blue-50 px-3 py-2 text-blue-700"><span className="inline-flex items-center gap-2"><Coins size={16} /> {balance.toLocaleString()} Robux*</span><button onClick={() => { setBalanceDraft(String(balance)); setSettingsOpen(true); }} className="font-semibold">Robux settings</button></div>
+            <div className="flex items-center justify-between rounded-lg bg-blue-50 px-3 py-2 text-blue-700"><span className="inline-flex items-center gap-2"><Coins size={16} /> {balance.toLocaleString()} Robux</span><button onClick={() => { setBalanceDraft(String(balance)); setSettingsOpen(true); }} className="font-semibold">Robux settings</button></div>
             <a href="#gifting" onClick={() => setMobileOpen(false)}>Send a gift</a><a href="#history" onClick={() => setMobileOpen(false)}>Gift history</a>
             {session ? <button className="text-left text-slate-600" onClick={() => { setSession(null); setMobileOpen(false); }}>Sign out</button> : <div className="flex gap-2"><button className="btn-secondary flex-1" onClick={() => openAuth("login")}>Log in</button><button className="btn-primary flex-1" onClick={() => openAuth("signup")}>Create account</button></div>}
           </div>
@@ -213,10 +213,9 @@ function App() {
           </div>
         </section>
 
-section>
       </main>
 
-      <footer className="border-t border-slate-200 bg-white"><div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-7 text-xs text-slate-400 sm:flex-row sm:items-center sm:justify-between sm:px-6"><span className="font-bold tracking-tight text-slate-700">Roblox Gifter<span className="text-blue-600">.</span></span><span>Fan-made prank preview · Not affiliated with Roblox · No Robux transferred</span><a href="#about" className="font-medium text-blue-600 hover:text-blue-700">Gifting</a></div></footer>
+      <footer className="border-t border-slate-200 bg-white"><div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-7 text-xs text-slate-400 sm:flex-row sm:items-center sm:justify-between sm:px-6"><span className="font-bold tracking-tight text-slate-700">Roblox Gifter<span className="text-blue-600">.</span></span><span>Fan-made prank preview · Not affiliated with Roblox · No Robux transferred</span><a href="#gifting" className="font-medium text-blue-600 hover:text-blue-700">Gifting</a></div></footer>
 
       {settingsOpen && <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 p-4" onMouseDown={(e) => { if (e.target === e.currentTarget) setSettingsOpen(false); }}>
         <div className="w-full max-w-sm rounded-2xl border border-slate-700 bg-slate-900 p-6 text-slate-100 shadow-2xl">
@@ -226,7 +225,7 @@ section>
           <input id="balance-setting" className="field" type="number" min="0" max="1000000000" step="1" value={balanceDraft} onChange={(e) => setBalanceDraft(e.target.value)} />
           <p className="mt-2 text-xs text-slate-400">Your display username is set to s_viper109for when creating a profile.</p>
           <div className="mt-5 flex gap-2"><button className="btn-secondary flex-1" onClick={() => setSettingsOpen(false)}>Cancel</button><button className="btn-primary flex-1" onClick={() => { const n = Number(balanceDraft); if (Number.isSafeInteger(n) && n >= 0 && n <= 1000000000) { setBalance(n); setSettingsOpen(false); setNotice("Preview balance updated."); window.setTimeout(() => setNotice(""), 3500); } else setNotice("Enter a whole number from 0 to 1,000,000,000."); }}>Save balance</button></div>
-          <p className="mt-4 text-[11px] text-slate-400">*Simulated balance for this fan-made preview only.</p>
+          
         </div>
       </div>
       {notice && <div role="status" className="fixed bottom-5 left-1/2 z-50 flex w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 items-start gap-3 rounded-xl border border-blue-100 bg-white p-4 text-sm shadow-xl"><span className="mt-0.5 text-blue-600"><Check size={17} /></span><span className="flex-1 text-slate-700">{notice}</span><button onClick={() => setNotice("")} aria-label="Dismiss"><X size={16} /></button></div>}
